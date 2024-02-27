@@ -14,34 +14,75 @@ controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pres
     }
 })
 function randomize (num: number) {
-	
+    for (let index = 0; index < 2; index++) {
+        if (Math.percentChance(50)) {
+            sprites.destroy(player1)
+            player1 = sprites.create(player1Height._pickRandom(), SpriteKind.Player)
+            player1.setPosition(32, 113)
+            controller.player1.moveSprite(player1, 100, 0)
+            sprites.destroy(player2)
+            player2 = sprites.create(player2Height._pickRandom(), SpriteKind.Player)
+            player2.setPosition(127, 113)
+            controller.player2.moveSprite(player2, 100, 0)
+        } else if (Math.percentChance(50)) {
+            if (num >= 3) {
+                sprites.destroy(basketBall)
+                basketBall = sprites.create(ballList._pickRandom(), SpriteKind.Projectile)
+                basketBall.setPosition(75, 28)
+            }
+        }
+    }
 }
 controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Released, function () {
     if (!(player1.y > 100)) {
         basketBall.follow(null)
     }
     if (player1.x == basketBall.x) {
-        sprites.destroy(basketBall)
-        basketBall = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . 4 4 f 4 4 . . . . . . 
-            . . . . 4 f 4 f 4 f 4 . . . . . 
-            . . . . 4 4 f f f 4 4 . . . . . 
-            . . . . f f f f f f f . . . . . 
-            . . . . 4 4 f f f 4 4 . . . . . 
-            . . . . 4 f 4 f 4 f 4 . . . . . 
-            . . . . . 4 4 f 4 4 . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, player1, 100, -125)
-        basketBall.ay = 160
-        basketBall.setBounceOnWall(true)
+        if (player1.x < 80) {
+            sprites.destroy(basketBall)
+            basketBall = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . f f f f f f f . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, player1, 100, -125)
+            basketBall.ay = 160
+            basketBall.setBounceOnWall(true)
+        } else {
+            sprites.destroy(basketBall)
+            basketBall = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . f f f f f f f . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, player1, 100, -125)
+            basketBall.ay = 160
+            basketBall.setBounceOnWall(true)
+        }
     }
 })
 sprites.onOverlap(SpriteKind.Hitbox2, SpriteKind.Projectile, function (sprite, otherSprite) {
@@ -75,27 +116,51 @@ controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Rele
         basketBall.follow(null)
     }
     if (player2.x == basketBall.x) {
-        sprites.destroy(basketBall)
-        basketBall = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . 4 4 f 4 4 . . . . . . 
-            . . . . 4 f 4 f 4 f 4 . . . . . 
-            . . . . 4 4 f f f 4 4 . . . . . 
-            . . . . f f f f f f f . . . . . 
-            . . . . 4 4 f f f 4 4 . . . . . 
-            . . . . 4 f 4 f 4 f 4 . . . . . 
-            . . . . . 4 4 f 4 4 . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, player2, -100, -125)
-        basketBall.ay = 160
-        basketBall.setBounceOnWall(true)
+        if (player2.x < 80) {
+            sprites.destroy(basketBall)
+            basketBall = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . f f f f f f f . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, player2, -100, -125)
+            basketBall.ay = 160
+            basketBall.setBounceOnWall(true)
+        } else {
+            sprites.destroy(basketBall)
+            basketBall = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . f f f f f f f . . . . . 
+                . . . . 4 4 f f f 4 4 . . . . . 
+                . . . . 4 f 4 f 4 f 4 . . . . . 
+                . . . . . 4 4 f 4 4 . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, player2, -100, -125)
+            basketBall.ay = 160
+            basketBall.setBounceOnWall(true)
+        }
     }
 })
 controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pressed, function () {
@@ -136,6 +201,9 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Wall, function (sprite, otherSprite) {
     sprite.setVelocity(-1 * sprite.vx, sprite.vy)
     sprite.ay = 200
+    if (true) {
+    	
+    }
 })
 sprites.onCreated(SpriteKind.Hitbox2, function (sprite) {
     sprite.setPosition(player2.x - 5, player2.y)
@@ -149,6 +217,9 @@ sprites.onCreated(SpriteKind.Hitbox1, function (sprite) {
 })
 let box1: Sprite = null
 let box2: Sprite = null
+let player2Height: Image[] = []
+let player1Height: Image[] = []
+let ballList: Image[] = []
 let lastTimestamp = 0
 let jump2 = 0
 let jump1 = 0
@@ -821,13 +892,241 @@ let targetHoop2 = sprites.create(img`
 targetHoop2.setPosition(135, 36)
 info.player1.setScore(0)
 info.player2.setScore(0)
+ballList = [img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . 6 6 f 8 8 . . . . . . 
+    . . . . 2 f 6 f 8 f c . . . . . 
+    . . . . 2 2 f f f c c . . . . . 
+    . . . . f f f f f f f . . . . . 
+    . . . . a a f f f 7 7 . . . . . 
+    . . . . a f 9 f e f 7 . . . . . 
+    . . . . . 9 9 f e e . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . 4 4 f 4 4 . . . . . . 
+    . . . . 4 f 4 f 4 f 4 . . . . . 
+    . . . . 4 4 f f f 4 4 . . . . . 
+    . . . . f f f f f f f . . . . . 
+    . . . . 4 4 f f f 4 4 . . . . . 
+    . . . . 4 f 4 f 4 f 4 . . . . . 
+    . . . . . 4 4 f 4 4 . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . b b f b b . . . . . . 
+    . . . . b f b f b f b . . . . . 
+    . . . . b b f f f b b . . . . . 
+    . . . . f f f f f f f . . . . . 
+    . . . . b b f f f b b . . . . . 
+    . . . . b f b f b f b . . . . . 
+    . . . . . b b f b b . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `]
+player1Height = [img`
+    . . . . 2 2 2 2 2 e . . . . . . 
+    . . . 2 2 2 2 d 2 2 e . . . . . 
+    . . e 2 2 2 2 2 2 2 e . . . . . 
+    . . e 2 2 2 2 2 2 2 e . . . . . 
+    . . e 2 2 2 2 2 e f f c c . . . 
+    . . e e 2 2 e f f f f b c . . . 
+    . e e e f e 2 b f f f d c . . . 
+    e e 2 2 d f 2 1 1 1 1 b c . . . 
+    e e 2 2 d f e e c c c . . . . . 
+    b 1 1 d e 2 2 e e c . . . . . . 
+    . f f e 2 2 2 2 e . . . . . . . 
+    . . f f d d 2 2 f f d d . . . . 
+    . . f f d d e e f f d d . . . . 
+    . . . f f f f . . . . . . . . . 
+    . . e e e f f f . . . . . . . . 
+    . . e e e e f f f . . . . . . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . 2 2 2 e . . . . . . . . . . 
+    . 2 2 2 d 2 e . . . . . . . . . 
+    . 2 2 2 2 2 e . . . . . . . . . 
+    . 2 2 2 2 f f c . . . . . . . . 
+    . e 2 e f f f c . . . . . . . . 
+    e 2 d 2 1 1 1 c . . . . . . . . 
+    e 2 d e e c c . . . . . . . . . 
+    f e 2 2 2 . . . . . . . . . . . 
+    . f d 2 2 f d . . . . . . . . . 
+    . f f f . . . . . . . . . . . . 
+    . e e f f . . . . . . . . . . . 
+    `, img`
+    ............22222222222eee......
+    ............22222222222eee......
+    ............22222222222eee......
+    ........2222222222ddd22222ee....
+    ........2222222222ddd22222ee....
+    ........2222222222ddd22222ee....
+    .......e222222222222222222ee....
+    .......e222222222222222222ee....
+    .......e222222222222222222ee....
+    .......e2222222222222eefffffcccc
+    .......e2222222222222eefffffcccc
+    .......eeeee2222eeffffffffffbbbc
+    .......eeeee2222eeffffffffffbbbc
+    ....eeeeeeeefeee22bbbfffffffdddc
+    ....eeeeeeeefeee22bbbfffffffdddc
+    eeeeeee22222dfff221111111111bbbc
+    eeeeeee22222dfff221111111111bbbc
+    eeeeeee22222dfffeeeeeccccccc....
+    eeeeeee22222dfffeeeeeccccccc....
+    eeeeeee22222dfffeeeeeccccccc....
+    bbbb1111dddde22222eeeeeccc......
+    ....ffffeeee222222222ee.........
+    ....ffffeeee222222222ee.........
+    ....ffffeeee222222222ee.........
+    .......fffffdddd22222fffffddddd.
+    .......fffffddddeeeeefffffddddd.
+    .......fffffddddeeeeefffffddddd.
+    ........ffffffffff..............
+    ........ffffffffff..............
+    .......eeeeeeffffffff...........
+    .......eeeeeeffffffff...........
+    .......eeeeeeeeefffffff.........
+    `]
+player2Height = [img`
+    . . . . . . c a a a a a . . . . 
+    . . . . . c a a 9 a a a a . . . 
+    . . . . . c a a a a a a a c . . 
+    . . . . . c a a a a a a a c . . 
+    . . . a a f f c a a a a a c . . 
+    . . . a b f f f f c a a c c . . 
+    . . . a 9 f f f b a c f c c c . 
+    . . . a b 1 1 1 1 a f 9 a a c c 
+    . . . . . c c c c c f 9 a a c c 
+    . . . . . . c c c a a c 9 1 1 b 
+    . . . . . . . c a a a a c f f . 
+    . . . . 9 9 f f a a 9 9 f f . . 
+    . . . . 9 9 f f c c 9 9 f f . . 
+    . . . . . . . . . f f f f . . . 
+    . . . . . . . . f f f c c c . . 
+    . . . . . . . f f f c c c c . . 
+    `, img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . a a a a . . 
+    . . . . . . . . . c a 9 a a . . 
+    . . . . . . . . . c a a a a c . 
+    . . . . . . . . a f c a a a c . 
+    . . . . . . . . b f f f a a c . 
+    . . . . . . . . b 1 1 1 f 9 a c 
+    . . . . . . . . . c c c f 9 a c 
+    . . . . . . . . . . c a a a f f 
+    . . . . . . . . 9 9 f a 9 9 f . 
+    . . . . . . . . . . . . f f . . 
+    . . . . . . . . . . . f f c c . 
+    `, img`
+    ........ccaaaaaaaaaaaaa.........
+    ........ccaaaaaaaaaaaaa.........
+    .....cccaaaaa99aaaaaaaaaa.......
+    .....cccaaaaa99aaaaaaaaaa.......
+    .....cccaaaaaaaaaaaaaaaaaccc....
+    .....cccaaaaaaaaaaaaaaaaaccc....
+    .....cccaaaaaaaaaaaaaaaaaccc....
+    .....cccaaaaaaaaaaaaaaaaaccc....
+    aaaaafffffcccaaaaaaaaaaaaccc....
+    aaaaafffffcccaaaaaaaaaaaaccc....
+    aaabbffffffffffcccaaaaaccccc....
+    aaabbffffffffffcccaaaaaccccc....
+    aaa99ffffffffbbaaaccfffccccccc..
+    aaa99ffffffffbbaaaccfffccccccc..
+    aaabb1111111111aaaff999aaaaacccc
+    aaabb1111111111aaaff999aaaaacccc
+    .....cccccccccccccff999aaaaacccc
+    .....cccccccccccccff999aaaaacccc
+    ........cccccccaaaaaccc9911111bb
+    ........cccccccaaaaaccc9911111bb
+    ..........cccaaaaaaaaaaccfffff..
+    ..........cccaaaaaaaaaaccfffff..
+    ...99999fffffaaaaa99999fffff....
+    ...99999fffffaaaaa99999fffff....
+    ...99999fffffccccc99999fffff....
+    ...99999fffffccccc99999fffff....
+    ...............ffffffffff.......
+    ...............ffffffffff.......
+    .............fffffffcccccccc....
+    .............fffffffcccccccc....
+    ..........ffffffffcccccccccc....
+    ..........ffffffffcccccccccc....
+    `]
 game.onUpdate(function () {
     if (basketBall.overlapsWith(targetHoop1)) {
         info.player2.changeScoreBy(1)
-        randomize(1)
+        randomize(info.player2.score())
     }
     if (basketBall.overlapsWith(targetHoop2)) {
         info.player1.changeScoreBy(1)
-        randomize(1)
+        randomize(info.player1.score())
+    }
+    if (basketBall.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . b b f b b . . . . . . 
+        . . . . b f b f b f b . . . . . 
+        . . . . b b f f f b b . . . . . 
+        . . . . f f f f f f f . . . . . 
+        . . . . b b f f f b b . . . . . 
+        . . . . b f b f b f b . . . . . 
+        . . . . . b b f b b . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)) {
+        basketBall.ay = 250
+    }
+    if (basketBall.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . 6 6 f 8 8 . . . . . . 
+        . . . . 2 f 6 f 8 f c . . . . . 
+        . . . . 2 2 f f f c c . . . . . 
+        . . . . f f f f f f f . . . . . 
+        . . . . a a f f f 7 7 . . . . . 
+        . . . . a f 9 f e f 7 . . . . . 
+        . . . . . 9 9 f e e . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)) {
+        basketBall.ay = 160
     }
 })
