@@ -43,8 +43,8 @@ function randomize (num: number) {
             player2 = sprites.create(player2Height._pickRandom(), SpriteKind.Player)
             player2.setPosition(127, 113)
             controller.player2.moveSprite(player2, 100, 0)
-        } else if (Math.percentChance(50)) {
-            if (num >= 3) {
+        } else if (Math.percentChance(75)) {
+            if (num >= 2) {
                 sprites.destroy(basketBall)
                 basketBall = sprites.create(ballList._pickRandom(), SpriteKind.Projectile)
                 basketBall.setPosition(75, 28)
@@ -1282,11 +1282,11 @@ game.onUpdate(function () {
     }
 })
 game.onUpdate(function () {
-    if (info.player2.score() == 5) {
+    if (info.player2.score() >= 5) {
         game.gameOver(true)
         game.setGameOverMessage(true, "Player 2 Wins!")
     }
-    if (info.player1.score() == 5) {
+    if (info.player1.score() >= 5) {
         game.gameOver(true)
         game.setGameOverMessage(true, "Player 1 Wins!")
     }
