@@ -5,7 +5,7 @@ namespace SpriteKind {
     export const target = SpriteKind.create()
 }
 controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pressed, function () {
-    if (player1.y == 113) {
+    if (player1.y == 113 || player1.y == 105) {
         jump1 = 0
     }
     jump1 += 1
@@ -14,6 +14,25 @@ controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pres
     }
 })
 function randomize (num: number) {
+    basketBall = sprites.create(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . 4 4 f 4 4 . . . . . . 
+        . . . . 4 f 4 f 4 f 4 . . . . . 
+        . . . . 4 4 f f f 4 4 . . . . . 
+        . . . . f f f f f f f . . . . . 
+        . . . . 4 4 f f f 4 4 . . . . . 
+        . . . . 4 f 4 f 4 f 4 . . . . . 
+        . . . . . 4 4 f 4 4 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, SpriteKind.Projectile)
+    basketBall.setPosition(75, 28)
     for (let index = 0; index < 2; index++) {
         if (Math.percentChance(50)) {
             sprites.destroy(player1)
@@ -39,47 +58,11 @@ controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Rele
     }
     if (player1.x == basketBall.x) {
         if (player1.x < 80) {
-            sprites.destroy(basketBall)
-            basketBall = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . f f f f f f f . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, player1, 100, -125)
+            basketBall.setVelocity(100, -125)
             basketBall.ay = 160
             basketBall.setBounceOnWall(true)
         } else {
-            sprites.destroy(basketBall)
-            basketBall = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . f f f f f f f . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, player1, 100, -125)
+            basketBall.setVelocity(50, -125)
             basketBall.ay = 160
             basketBall.setBounceOnWall(true)
         }
@@ -117,54 +100,18 @@ controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Rele
     }
     if (player2.x == basketBall.x) {
         if (player2.x < 80) {
-            sprites.destroy(basketBall)
-            basketBall = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . f f f f f f f . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, player2, -100, -125)
+            basketBall.setVelocity(-100, -125)
             basketBall.ay = 160
             basketBall.setBounceOnWall(true)
         } else {
-            sprites.destroy(basketBall)
-            basketBall = sprites.createProjectileFromSprite(img`
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . f f f f f f f . . . . . 
-                . . . . 4 4 f f f 4 4 . . . . . 
-                . . . . 4 f 4 f 4 f 4 . . . . . 
-                . . . . . 4 4 f 4 4 . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                . . . . . . . . . . . . . . . . 
-                `, player2, -100, -125)
+            basketBall.setVelocity(-100, -125)
             basketBall.ay = 160
             basketBall.setBounceOnWall(true)
         }
     }
 })
 controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pressed, function () {
-    if (player2.y == 113) {
+    if (player2.y == 113 || player2.y == 105) {
         jump2 = 0
     }
     jump2 += 1
@@ -199,21 +146,137 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
     }
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Wall, function (sprite, otherSprite) {
-    sprite.setVelocity(-1 * sprite.vx, sprite.vy)
-    sprite.ay = 200
-    if (true) {
-    	
-    }
+    sprite.setVelocity(-1 * sprite.vx, -1 * sprite.vy)
 })
 sprites.onCreated(SpriteKind.Hitbox2, function (sprite) {
-    sprite.setPosition(player2.x - 5, player2.y)
-    pause(100)
-    sprites.destroy(sprite)
+    if (player2.image.equals(img`
+        ........ccaaaaaaaaaaaaa.........
+        ........ccaaaaaaaaaaaaa.........
+        .....cccaaaaa99aaaaaaaaaa.......
+        .....cccaaaaa99aaaaaaaaaa.......
+        .....cccaaaaaaaaaaaaaaaaaccc....
+        .....cccaaaaaaaaaaaaaaaaaccc....
+        .....cccaaaaaaaaaaaaaaaaaccc....
+        .....cccaaaaaaaaaaaaaaaaaccc....
+        aaaaafffffcccaaaaaaaaaaaaccc....
+        aaaaafffffcccaaaaaaaaaaaaccc....
+        aaabbffffffffffcccaaaaaccccc....
+        aaabbffffffffffcccaaaaaccccc....
+        aaa99ffffffffbbaaaccfffccccccc..
+        aaa99ffffffffbbaaaccfffccccccc..
+        aaabb1111111111aaaff999aaaaacccc
+        aaabb1111111111aaaff999aaaaacccc
+        .....cccccccccccccff999aaaaacccc
+        .....cccccccccccccff999aaaaacccc
+        ........cccccccaaaaaccc9911111bb
+        ........cccccccaaaaaccc9911111bb
+        ..........cccaaaaaaaaaaccfffff..
+        ..........cccaaaaaaaaaaccfffff..
+        ...99999fffffaaaaa99999fffff....
+        ...99999fffffaaaaa99999fffff....
+        ...99999fffffccccc99999fffff....
+        ...99999fffffccccc99999fffff....
+        ...............ffffffffff.......
+        ...............ffffffffff.......
+        .............fffffffcccccccc....
+        .............fffffffcccccccc....
+        ..........ffffffffcccccccccc....
+        ..........ffffffffcccccccccc....
+        `)) {
+        sprite.setPosition(player2.x - 10, player2.y)
+        pause(100)
+        sprites.destroy(sprite)
+    } else if (player2.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . a a a a . . 
+        . . . . . . . . . c a 9 a a . . 
+        . . . . . . . . . c a a a a c . 
+        . . . . . . . . a f c a a a c . 
+        . . . . . . . . b f f f a a c . 
+        . . . . . . . . b 1 1 1 f 9 a c 
+        . . . . . . . . . c c c f 9 a c 
+        . . . . . . . . . . c a a a f f 
+        . . . . . . . . 9 9 f a 9 9 f . 
+        . . . . . . . . . . . . f f . . 
+        . . . . . . . . . . . f f c c . 
+        `)) {
+        sprite.setPosition(player2.x - 2.5, player2.y)
+        pause(100)
+        sprites.destroy(sprite)
+    } else {
+        sprite.setPosition(player2.x - 5, player2.y)
+        pause(100)
+        sprites.destroy(sprite)
+    }
 })
 sprites.onCreated(SpriteKind.Hitbox1, function (sprite) {
-    sprite.setPosition(player1.x + 5, player1.y)
-    pause(100)
-    sprites.destroy(sprite)
+    if (player1.image.equals(img`
+        ............22222222222eee......
+        ............22222222222eee......
+        ............22222222222eee......
+        ........2222222222ddd22222ee....
+        ........2222222222ddd22222ee....
+        ........2222222222ddd22222ee....
+        .......e222222222222222222ee....
+        .......e222222222222222222ee....
+        .......e222222222222222222ee....
+        .......e2222222222222eefffffcccc
+        .......e2222222222222eefffffcccc
+        .......eeeee2222eeffffffffffbbbc
+        .......eeeee2222eeffffffffffbbbc
+        ....eeeeeeeefeee22bbbfffffffdddc
+        ....eeeeeeeefeee22bbbfffffffdddc
+        eeeeeee22222dfff221111111111bbbc
+        eeeeeee22222dfff221111111111bbbc
+        eeeeeee22222dfffeeeeeccccccc....
+        eeeeeee22222dfffeeeeeccccccc....
+        eeeeeee22222dfffeeeeeccccccc....
+        bbbb1111dddde22222eeeeeccc......
+        ....ffffeeee222222222ee.........
+        ....ffffeeee222222222ee.........
+        ....ffffeeee222222222ee.........
+        .......fffffdddd22222fffffddddd.
+        .......fffffddddeeeeefffffddddd.
+        .......fffffddddeeeeefffffddddd.
+        ........ffffffffff..............
+        ........ffffffffff..............
+        .......eeeeeeffffffff...........
+        .......eeeeeeffffffff...........
+        .......eeeeeeeeefffffff.........
+        `)) {
+        sprite.setPosition(player1.x + 10, player1.y)
+        pause(100)
+        sprites.destroy(sprite)
+    } else if (player1.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . 2 2 2 e . . . . . . . . . . 
+        . 2 2 2 d 2 e . . . . . . . . . 
+        . 2 2 2 2 2 e . . . . . . . . . 
+        . 2 2 2 2 f f c . . . . . . . . 
+        . e 2 e f f f c . . . . . . . . 
+        e 2 d 2 1 1 1 c . . . . . . . . 
+        e 2 d e e c c . . . . . . . . . 
+        f e 2 2 2 . . . . . . . . . . . 
+        . f d 2 2 f d . . . . . . . . . 
+        . f f f . . . . . . . . . . . . 
+        . e e f f . . . . . . . . . . . 
+        `)) {
+        sprite.setPosition(player1.x + 2.5, player1.y)
+        pause(100)
+        sprites.destroy(sprite)
+    } else {
+        sprite.setPosition(player1.x + 5, player1.y)
+        pause(100)
+        sprites.destroy(sprite)
+    }
 })
 let box1: Sprite = null
 let box2: Sprite = null
@@ -231,42 +294,42 @@ scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-    9999999999999999999992229999222222222229999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
-    9999999999999999999992222222222222222222299999999999222222292222229999999999999999999999999999999999999999999999999999999999922222999999999999999999999999999999
-    9999999999999999999992222222222222222222222999992222222222222222229999222299999922229999999999999992222222299999999999999992222222222999999999999999999999999999
-    9999999999999999999992222222229999999222222999992222222222222222229999222222222222222222222999992222222222222299999999999922222222222299999999999999999999999999
-    9999999999999999999992222299999999999992222999992222229992222299999999222222222222222222222992222222222222222229999999999222222922222229999999999999999999999999
-    9999999999999999999992221119999999999999222999992229999999999999999999992222222222222222222992222222299122222222299999992222299999222229999999999999999999999999
-    9999999999999999999992221119911999999999222999992229999999999999999999999992222999999999999992222299999111122222299999992222999999222229999999999999999999999999
-    9999999999999999991112221119111119999992222999992229999999999999999999999992229999999999999999222999111111111222221999922229999999922229999999999999999999999999
-    9999999999999999911112221111111119999992222999992229999999999999999999999992229999999999999999222991111111111122221999922229999999922229999999999999999999999999
-    9999999999999999111112221111111111199992229999992229999999999999999999999992229999999999999999222911111111111112221119222299999999992229999999999999999999999999
-    9999999999999999111112221111111111119922229999992229999999999999999999999992229999999999999999222911111111111112221111222299999999992222999999999999999999999999
-    9999999999999999911112221111111111119922229999992229999999999999999999999992229999999999999999222991111111111122221111222119999999992222999999999999999999999999
-    9999999999999111191112221111111111122222211999992229999999999999999999999992229999999999999999222119111111111122221112222111199999999222999999999999999999999999
-    9999999999991111119112221111111122222222211999992229999999999999999999999992229999999999999999222111911111111222211112222111199999999222999999999999999999999999
-    9999999999991111111112221111222222222222111199992229999999999999999999999992229999999999999999222111111111112222211192221111119999999222999999999999999999999999
-    9999999999991111111112221122222222222111111199992222999999999999999999999992229999999999999999222111111111122222111112221111119999999222999999999999999999999999
-    9999999999999111111112222222222222111111111199992222999999999999999999999992229999999999999999222111111112222222111112221111119999999222999999999999999999999999
-    9911199991111911111112222222221111111111111991199222222222222111999999999992229999991119999111222111111122222211111112221111199119999222999999111199999999999999
-    9111119911111111111112222222111111111111111911119222222222222111199999999992229999911111991111222111112222222111111112221111191111999222999991111119999999999999
-    9111119111111111111112222222221111111111111911119222222222222111191119999992229999911111911111222111222222221111111112221111191111999222999991111119111999999999
-    9911111111111111111112222222222111111111111111119222999999999111111111999992229999991111111111222222222222111111111112222111111111999222999999911111111199999999
-    9111111111111111111112221122222211111111111111199222999911119111111111999992229999911111111111222222222221111111111112222111111119999222991111911111111199999999
-    1111111111111111111112221111222222111111111111119222999111111111111119999992222199111111111dd1222222222111111111111111222111111111999222911111111111111999999999
-    1111111111111111111112221111122222221111111111111222199111111111111111111992222ddd111111111ddd122222222221111111111111222111111111192222911111111111111111199999
-    1111111111111111111122221111112222222111111111111222111111111111111111111199222ddd111111111ddd122212222222211111111112222111111111112222111111111111111111119999
-    1111111111111111111122221111111122222211111111111222111111111111111111111199222ddddd111111ddddd22211122222211111111112222111111111112221111111111111111111119999
-    11111111111111111111222211111111112222211dddddddd222111111111111111111111111222ddddd111111ddddd222111112222211111111122211111111111122211dddddddddd1111111111111
-    11111111111111111111222211111111111222221dddddddd222111111111111111111111111222ddddd111111ddddd222111111222221111111122211111111111222211dddddddddd1111111111111
-    1111111111111111111d222211111111111122222211ddddd2222222222222222221111111112221dddd11111ddddd2222111111122221111111d22221111111111222211dd1d1ddddd1111111111111
-    111111111111111111ddd222111111111111122222dddddd1222222222222222222111111111222ddddd11111ddddd222211111111222211111dd22222111111111222111dddddd11dd1111111111111
-    11111111111111111dddddd1111111111111122222ddddddd22222222222222222211ddddd11222ddddd11111ddddd2221111111112222211ddddd2222211111112222111dddddddddd1111111111111
-    11111111111111111ddd1d111111d1111111111222ddddddd2222211111dd11122211ddddd11222ddddd11111ddddd2221111111112222211ddd1d222221dd12222222111dddd1ddddd11111111dd111
-    11111111111111111dddddd11111d111111111111ddddddd1d111111111dd11111111ddddd11222ddddd11111ddddd2221111111111222211dddddd222222222222221111ddddddd1dd11111111dd111
-    111111114444444444444444441ddd11111111111ddddddddd11dddddd1dd11111111ddddd111ddddddd11111ddddd22211111111dd122211ddd1d1122222222222211111dddddddddd1ddddddddd111
-    d1dd11114444444444444444444dddd1111111111ddddd444d11d11ddd1dd111111111dd1dd11ddddddd111dddddddddd1dd1111ddddddddddddd1d122222222211111111dddddd11dd1d11dddddd111
-    dddd11114444444444444444444dddd1111111111dddd4444d11dddd1d1dd11111111d4444444dd1dddd111ddddddddddddd1111dd1ddd1dddddddd111222221111111111dddddddddd1dddd1dddd111
+    999999999999999999999fff9999fffffffffff9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+    999999999999999999999ffffffffffffffffffff99999999999fffffff9ffffff99999999999999999999999999999999999999999999999999999999999fffff999999999999999999999999999999
+    999999999999999999999ffffffffffffffffffffff99999ffffffffffffffffff9999ffff999999ffff999999999999999ffffffff9999999999999999ffffffffff999999999999999999999999999
+    999999999999999999999fffffffff9999999ffffff99999ffffffffffffffffff9999fffffffffffffffffffff99999ffffffffffffff999999999999ffffffffffff99999999999999999999999999
+    999999999999999999999fffff9999999999999ffff99999ffffff999fffff99999999fffffffffffffffffffff99ffffffffffffffffff9999999999ffffff9fffffff9999999999999999999999999
+    999999999999999999999fff1119999999999999fff99999fff999999999999999999999fffffffffffffffffff99ffffffff991fffffffff9999999fffff99999fffff9999999999999999999999999
+    999999999999999999999fff1119911999999999fff99999fff999999999999999999999999ffff99999999999999fffff999991111ffffff9999999ffff999999fffff9999999999999999999999999
+    999999999999999999111fff111911111999999ffff99999fff999999999999999999999999fff9999999999999999fff999111111111fffff19999ffff99999999ffff9999999999999999999999999
+    999999999999999991111fff111111111999999ffff99999fff999999999999999999999999fff9999999999999999fff9911111111111ffff19999ffff99999999ffff9999999999999999999999999
+    999999999999999911111fff111111111119999fff999999fff999999999999999999999999fff9999999999999999fff91111111111111fff1119ffff9999999999fff9999999999999999999999999
+    999999999999999911111fff11111111111199ffff999999fff999999999999999999999999fff9999999999999999fff91111111111111fff1111ffff9999999999ffff999999999999999999999999
+    999999999999999991111fff11111111111199ffff999999fff999999999999999999999999fff9999999999999999fff9911111111111ffff1111fff11999999999ffff999999999999999999999999
+    999999999999911119111fff11111111111ffffff1199999fff999999999999999999999999fff9999999999999999fff1191111111111ffff111ffff111199999999fff999999999999999999999999
+    999999999999111111911fff11111111fffffffff1199999fff999999999999999999999999fff9999999999999999fff111911111111ffff1111ffff111199999999fff999999999999999999999999
+    999999999999111111111fff1111ffffffffffff11119999fff999999999999999999999999fff9999999999999999fff11111111111fffff1119fff1111119999999fff999999999999999999999999
+    999999999999111111111fff11fffffffffff11111119999ffff99999999999999999999999fff9999999999999999fff1111111111fffff11111fff1111119999999fff999999999999999999999999
+    999999999999911111111fffffffffffff11111111119999ffff99999999999999999999999fff9999999999999999fff11111111fffffff11111fff1111119999999fff999999999999999999999999
+    991119999111191111111fffffffff1111111111111991199ffffffffffff11199999999999fff9999991119999111fff1111111ffffff1111111fff1111199119999fff999999111199999999999999
+    911111991111111111111fffffff111111111111111911119ffffffffffff11119999999999fff9999911111991111fff11111fffffff11111111fff1111191111999fff999991111119999999999999
+    911111911111111111111fffffffff1111111111111911119ffffffffffff11119111999999fff9999911111911111fff111ffffffff111111111fff1111191111999fff999991111119111999999999
+    991111111111111111111ffffffffff111111111111111119fff99999999911111111199999fff9999991111111111ffffffffffff11111111111ffff111111111999fff999999911111111199999999
+    911111111111111111111fff11ffffff11111111111111199fff99991111911111111199999fff9999911111111111fffffffffff111111111111ffff111111119999fff991111911111111199999999
+    111111111111111111111fff1111ffffff111111111111119fff99911111111111111999999ffff199111111111dd1fffffffff111111111111111fff111111111999fff911111111111111999999999
+    111111111111111111111fff11111fffffff1111111111111fff19911111111111111111199ffffddd111111111ddd1ffffffffff1111111111111fff11111111119ffff911111111111111111199999
+    11111111111111111111ffff111111fffffff111111111111fff111111111111111111111199fffddd111111111ddd1fff1ffffffff1111111111ffff11111111111ffff111111111111111111119999
+    11111111111111111111ffff11111111ffffff11111111111fff111111111111111111111199fffddddd111111dddddfff111ffffff1111111111ffff11111111111fff1111111111111111111119999
+    11111111111111111111ffff1111111111fffff11ddddddddfff111111111111111111111111fffddddd111111dddddfff11111fffff111111111fff111111111111fff11dddddddddd1111111111111
+    11111111111111111111ffff11111111111fffff1ddddddddfff111111111111111111111111fffddddd111111dddddfff111111fffff11111111fff11111111111ffff11dddddddddd1111111111111
+    1111111111111111111dffff111111111111ffffff11dddddffffffffffffffffff111111111fff1dddd11111dddddffff1111111ffff1111111dffff1111111111ffff11dd1d1ddddd1111111111111
+    111111111111111111dddfff1111111111111fffffdddddd1ffffffffffffffffff111111111fffddddd11111dddddffff11111111ffff11111ddfffff111111111fff111dddddd11dd1111111111111
+    11111111111111111dddddd11111111111111fffffdddddddffffffffffffffffff11ddddd11fffddddd11111dddddfff111111111fffff11dddddfffff1111111ffff111dddddddddd1111111111111
+    11111111111111111ddd1d111111d1111111111fffdddddddfffff11111dd111fff11ddddd11fffddddd11111dddddfff111111111fffff11ddd1dfffff1dd1fffffff111dddd1ddddd11111111dd111
+    11111111111111111dddddd11111d111111111111ddddddd1d111111111dd11111111ddddd11fffddddd11111dddddfff1111111111ffff11ddddddffffffffffffff1111ddddddd1dd11111111dd111
+    111111114444444444444444441ddd11111111111ddddddddd11dddddd1dd11111111ddddd111ddddddd11111dddddfff11111111dd1fff11ddd1d11ffffffffffff11111dddddddddd1ddddddddd111
+    d1dd11114444444444444444444dddd1111111111ddddd444d11d11ddd1dd111111111dd1dd11ddddddd111dddddddddd1dd1111ddddddddddddd1d1fffffffff11111111dddddd11dd1d11dddddd111
+    dddd11114444444444444444444dddd1111111111dddd4444d11dddd1d1dd11111111d4444444dd1dddd111ddddddddddddd1111dd1ddd1dddddddd111fffff1111111111dddddddddd1dddd1dddd111
     dd1d1111444d1111ddddddd44444ddd1111111111ddd44444411dddd1dddd11111114444444444dddddd111ddddddddddd1d1111dddd1d11ddddddd1111dddd1111111111dddddddddd1dddd1dddd111
     dddd1111444ddddddddddddd44444ddd11dd1dd1dddd444444d1d11dddddd11114444444444444dddddd11444ddddddddddd1111ddddddddd444444d11dddd44444444444dddddddddd1d11dddddd111
     dd1d1111444ddddddddddddd14444ddd11dddddddddd44444441ddddddddd11d144444444d4444dddddd11444ddddddddd144411d44444444444444d11ddd44444444444444444444dd1ddddddddd111
@@ -841,14 +904,10 @@ basketBall = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Projectile)
+basketBall.setBounceOnWall(true)
 basketBall.ay = 150
-player1.ay = 200
-player2.ay = 200
 controller.player1.moveSprite(player1, 100, 0)
 controller.player2.moveSprite(player2, 100, 0)
-player1.setStayInScreen(true)
-player2.setStayInScreen(true)
-basketBall.setBounceOnWall(true)
 jump1 = 0
 jump2 = 0
 lastTimestamp = game.runtime()
@@ -857,9 +916,9 @@ let targetHoop1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+    . . . . . . . 5 5 . . . . . . . 
+    . . . . . 5 5 5 5 5 5 . . . . . 
+    . . 5 5 5 5 5 5 5 5 5 5 5 5 . . 
     . . 5 5 5 5 5 5 5 5 5 5 5 5 . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -871,14 +930,33 @@ let targetHoop1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.target)
 targetHoop1.setPosition(27, 36)
+let block = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . f f f f f f f f f f f f . . 
+    . . f f f f f f f f f f f f . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Wall)
+block.setPosition(27, 40)
 let targetHoop2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
+    . . . . . . . 5 5 . . . . . . . 
+    . . . . . 5 5 5 5 5 5 . . . . . 
+    . . 5 5 5 5 5 5 5 5 5 5 5 5 . . 
     . . 5 5 5 5 5 5 5 5 5 5 5 5 . . 
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -889,6 +967,25 @@ let targetHoop2 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.target)
+block = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . f f f f f f f f f f f f . . 
+    . . f f f f f f f f f f f f . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Wall)
+block.setPosition(135, 40)
 targetHoop2.setPosition(135, 36)
 info.player1.setScore(0)
 info.player2.setScore(0)
@@ -1081,13 +1178,43 @@ player2Height = [img`
     ..........ffffffffcccccccccc....
     `]
 game.onUpdate(function () {
-    if (basketBall.overlapsWith(targetHoop1)) {
-        info.player2.changeScoreBy(1)
-        randomize(info.player2.score())
-    }
-    if (basketBall.overlapsWith(targetHoop2)) {
-        info.player1.changeScoreBy(1)
-        randomize(info.player1.score())
+    player1.ay = 200
+    player1.setStayInScreen(true)
+    player2.ay = 200
+    player2.setStayInScreen(true)
+    basketBall.setStayInScreen(true)
+    basketBall.setBounceOnWall(true)
+    if (basketBall.image.equals(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . 4 4 f 4 4 . . . . . . 
+        . . . . 4 f 4 f 4 f 4 . . . . . 
+        . . . . 4 4 f f f 4 4 . . . . . 
+        . . . . f f f f f f f . . . . . 
+        . . . . 4 4 f f f 4 4 . . . . . 
+        . . . . 4 f 4 f 4 f 4 . . . . . 
+        . . . . . 4 4 f 4 4 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `)) {
+        basketBall.ay = 200
+        basketBall.fx = 50
+        basketBall.fy = 200
+        if (basketBall.overlapsWith(targetHoop1)) {
+            sprites.destroy(basketBall)
+            info.player2.changeScoreBy(1)
+            randomize(info.player2.score())
+        }
+        if (basketBall.overlapsWith(targetHoop2)) {
+            sprites.destroy(basketBall)
+            info.player1.changeScoreBy(1)
+            randomize(info.player1.score())
+        }
     }
     if (basketBall.image.equals(img`
         . . . . . . . . . . . . . . . . 
@@ -1108,6 +1235,18 @@ game.onUpdate(function () {
         . . . . . . . . . . . . . . . . 
         `)) {
         basketBall.ay = 250
+        basketBall.fx = 90
+        basketBall.fy = 200
+        if (basketBall.overlapsWith(targetHoop2)) {
+            sprites.destroy(basketBall)
+            info.player1.changeScoreBy(1)
+            randomize(info.player1.score())
+        }
+        if (basketBall.overlapsWith(targetHoop1)) {
+            sprites.destroy(basketBall)
+            info.player2.changeScoreBy(1)
+            randomize(info.player2.score())
+        }
     }
     if (basketBall.image.equals(img`
         . . . . . . . . . . . . . . . . 
@@ -1127,6 +1266,28 @@ game.onUpdate(function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         `)) {
-        basketBall.ay = 160
+        basketBall.ay = 200
+        basketBall.fx = 50
+        basketBall.fy = 200
+        if (basketBall.overlapsWith(targetHoop2)) {
+            sprites.destroy(basketBall)
+            info.player1.changeScoreBy(2)
+            randomize(info.player1.score())
+        }
+        if (basketBall.overlapsWith(targetHoop1)) {
+            sprites.destroy(basketBall)
+            info.player2.changeScoreBy(2)
+            randomize(info.player2.score())
+        }
+    }
+})
+game.onUpdate(function () {
+    if (info.player2.score() == 5) {
+        game.gameOver(true)
+        game.setGameOverMessage(true, "Player 2 Wins!")
+    }
+    if (info.player1.score() == 5) {
+        game.gameOver(true)
+        game.setGameOverMessage(true, "Player 1 Wins!")
     }
 })
