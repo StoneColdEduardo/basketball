@@ -4,6 +4,7 @@ namespace SpriteKind {
     export const Hitbox2 = SpriteKind.create()
     export const target = SpriteKind.create()
 }
+// Allows player 1 to jump once, when they are on the ground.
 controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pressed, function () {
     if (player1.y == 113 || player1.y == 105) {
         jump1 = 0
@@ -52,6 +53,7 @@ function randomize (num: number) {
         }
     }
 }
+// Allows player 1 to shoot the basketball.
 controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Released, function () {
     if (!(player1.y > 100)) {
         basketBall.follow(null)
@@ -68,9 +70,12 @@ controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Rele
         }
     }
 })
+// Sets the basketball to follow player 2 after it overlaps with the hitbox.
 sprites.onOverlap(SpriteKind.Hitbox2, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.follow(player2)
 })
+// Sets player 2's hitbox with a 500 ms cooldown.
+// Credit: Mr. Florczak
 controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     if (game.runtime() - lastTimestamp >= 500) {
         lastTimestamp = game.runtime()
@@ -94,6 +99,7 @@ controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
             `, SpriteKind.Hitbox2)
     }
 })
+// Allows player 2 to shoot the basketball.
 controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Released, function () {
     if (!(player2.y > 100)) {
         basketBall.follow(null)
@@ -110,6 +116,7 @@ controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Rele
         }
     }
 })
+// Allows player 2 to jump once, when they are on the ground.
 controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pressed, function () {
     if (player2.y == 113 || player2.y == 105) {
         jump2 = 0
@@ -119,9 +126,12 @@ controller.player2.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pres
         player2.setVelocity(0, -150)
     }
 })
+// Sets the basketball to follow player 1 after it overlaps with the hitbox.
 sprites.onOverlap(SpriteKind.Hitbox1, SpriteKind.Projectile, function (sprite, otherSprite) {
     otherSprite.follow(player1)
 })
+// Sets player 1's hitbox with a 500 ms cooldown.
+// Credit: Mr. Florczak
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
     if (game.runtime() - lastTimestamp >= 500) {
         lastTimestamp = game.runtime()
@@ -145,9 +155,12 @@ controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Press
             `, SpriteKind.Hitbox1)
     }
 })
+// When the basketball overlaps with a sprite of type wall, it bounces back.
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Wall, function (sprite, otherSprite) {
     sprite.setVelocity(-1 * sprite.vx, -1 * sprite.vy)
 })
+// Sets the hitbox of player 2 a certain distance  from the player depending on their height.
+// Credit: Mr. Florczak
 sprites.onCreated(SpriteKind.Hitbox2, function (sprite) {
     if (player2.image.equals(img`
         ........ccaaaaaaaaaaaaa.........
@@ -213,6 +226,8 @@ sprites.onCreated(SpriteKind.Hitbox2, function (sprite) {
         sprites.destroy(sprite)
     }
 })
+// Sets the hitbox of player 1 a certain distance  from the player depending on their height.
+// Credit: Mr. Florczak
 sprites.onCreated(SpriteKind.Hitbox1, function (sprite) {
     if (player1.image.equals(img`
         ............22222222222eee......
@@ -278,6 +293,7 @@ sprites.onCreated(SpriteKind.Hitbox1, function (sprite) {
         sprites.destroy(sprite)
     }
 })
+// Sets the background, hoop, rim, and player sprites to the starting position. Also sets lists for the heights of the players and the different basketballs.
 let box1: Sprite = null
 let box2: Sprite = null
 let player2Height: Image[] = []
@@ -1177,6 +1193,8 @@ player2Height = [img`
     ..........ffffffffcccccccccc....
     ..........ffffffffcccccccccc....
     `]
+let bounce = 0
+// Sets the players' and basketballs' gravity and sets the basketball to bounce on walls. Changes how each ball acts based on the image. Also, when the basketball overlaps with the targetHoop, it changes the players' score depending on the ball image and calls the randomize function.
 game.onUpdate(function () {
     player1.ay = 200
     player1.setStayInScreen(true)
@@ -1235,7 +1253,7 @@ game.onUpdate(function () {
         . . . . . . . . . . . . . . . . 
         `)) {
         basketBall.ay = 250
-        basketBall.fx = 90
+        basketBall.fx = 80
         basketBall.fy = 200
         if (basketBall.overlapsWith(targetHoop2)) {
             sprites.destroy(basketBall)
@@ -1281,6 +1299,7 @@ game.onUpdate(function () {
         }
     }
 })
+// Ends game whenever a player's score is 5 or greater.
 game.onUpdate(function () {
     if (info.player2.score() >= 5) {
         game.gameOver(true)
