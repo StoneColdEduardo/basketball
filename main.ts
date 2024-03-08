@@ -14,6 +14,7 @@ controller.player1.onButtonEvent(ControllerButton.Up, ControllerButtonEvent.Pres
         player1.setVelocity(0, -150)
     }
 })
+// Randomizes the heights and ball type every time a player scores.
 function randomize (num: number) {
     basketBall = sprites.create(img`
         . . . . . . . . . . . . . . . . 
@@ -77,8 +78,8 @@ sprites.onOverlap(SpriteKind.Hitbox2, SpriteKind.Projectile, function (sprite, o
 // Sets player 2's hitbox with a 500 ms cooldown.
 // Credit: Mr. Florczak
 controller.player2.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
-    if (game.runtime() - lastTimestamp >= 500) {
-        lastTimestamp = game.runtime()
+    if (game.runtime() - lastTimestamp2 >= 500) {
+        lastTimestamp2 = game.runtime()
         box2 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -133,8 +134,8 @@ sprites.onOverlap(SpriteKind.Hitbox1, SpriteKind.Projectile, function (sprite, o
 // Sets player 1's hitbox with a 500 ms cooldown.
 // Credit: Mr. Florczak
 controller.player1.onButtonEvent(ControllerButton.A, ControllerButtonEvent.Pressed, function () {
-    if (game.runtime() - lastTimestamp >= 500) {
-        lastTimestamp = game.runtime()
+    if (game.runtime() - lastTimestamp1 >= 500) {
+        lastTimestamp1 = game.runtime()
         box1 = sprites.create(img`
             . . . . . . . . . . . . . . . . 
             . . . . . . . . . . . . . . . . 
@@ -299,12 +300,13 @@ let box2: Sprite = null
 let player2Height: Image[] = []
 let player1Height: Image[] = []
 let ballList: Image[] = []
-let lastTimestamp = 0
+let lastTimestamp2 = 0
+let lastTimestamp1 = 0
 let jump2 = 0
 let jump1 = 0
-let basketBall: Sprite = null
 let player2: Sprite = null
 let player1: Sprite = null
+let basketBall: Sprite = null
 scene.setBackgroundImage(img`
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
     9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
@@ -864,6 +866,24 @@ backboard = sprites.create(img`
     ...........fff..................
     `, SpriteKind.Wall)
 backboard.setPosition(13, 75)
+basketBall = sprites.create(img`
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . 4 4 f 4 4 . . . . . . 
+    . . . . 4 f 4 f 4 f 4 . . . . . 
+    . . . . 4 4 f f f 4 4 . . . . . 
+    . . . . f f f f f f f . . . . . 
+    . . . . 4 4 f f f 4 4 . . . . . 
+    . . . . 4 f 4 f 4 f 4 . . . . . 
+    . . . . . 4 4 f 4 4 . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    . . . . . . . . . . . . . . . . 
+    `, SpriteKind.Projectile)
 player1 = sprites.create(img`
     . . . . 2 2 2 2 2 e . . . . . . 
     . . . 2 2 2 2 d 2 2 e . . . . . 
@@ -902,31 +922,14 @@ player2 = sprites.create(img`
     `, SpriteKind.Player)
 player1.setPosition(32, 113)
 player2.setPosition(127, 113)
-basketBall = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . 4 4 f 4 4 . . . . . . 
-    . . . . 4 f 4 f 4 f 4 . . . . . 
-    . . . . 4 4 f f f 4 4 . . . . . 
-    . . . . f f f f f f f . . . . . 
-    . . . . 4 4 f f f 4 4 . . . . . 
-    . . . . 4 f 4 f 4 f 4 . . . . . 
-    . . . . . 4 4 f 4 4 . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Projectile)
 basketBall.setBounceOnWall(true)
 basketBall.ay = 150
 controller.player1.moveSprite(player1, 100, 0)
 controller.player2.moveSprite(player2, 100, 0)
 jump1 = 0
 jump2 = 0
-lastTimestamp = game.runtime()
+lastTimestamp1 = game.runtime()
+lastTimestamp2 = game.runtime()
 let targetHoop1 = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . . . . . . . . . . . . . 
@@ -1194,6 +1197,17 @@ player2Height = [img`
     ..........ffffffffcccccccccc....
     `]
 let bounce = 0
+// Ends game whenever a player's score is 5 or greater.
+game.onUpdate(function () {
+    if (info.player2.score() >= 5) {
+        game.gameOver(true)
+        game.setGameOverMessage(true, "Player 2 Wins!")
+    }
+    if (info.player1.score() >= 5) {
+        game.gameOver(true)
+        game.setGameOverMessage(true, "Player 1 Wins!")
+    }
+})
 // Sets the players' and basketballs' gravity and sets the basketball to bounce on walls. Changes how each ball acts based on the image. Also, when the basketball overlaps with the targetHoop, it changes the players' score depending on the ball image and calls the randomize function.
 game.onUpdate(function () {
     player1.ay = 200
@@ -1297,16 +1311,5 @@ game.onUpdate(function () {
             info.player2.changeScoreBy(2)
             randomize(info.player2.score())
         }
-    }
-})
-// Ends game whenever a player's score is 5 or greater.
-game.onUpdate(function () {
-    if (info.player2.score() >= 5) {
-        game.gameOver(true)
-        game.setGameOverMessage(true, "Player 2 Wins!")
-    }
-    if (info.player1.score() >= 5) {
-        game.gameOver(true)
-        game.setGameOverMessage(true, "Player 1 Wins!")
     }
 })
